@@ -7,47 +7,51 @@
 </head>
 <body>
   <div id="output"></div>
-<!-- made by gurpreet -->
+  <button id="intervalButton">Set Interval</button>
+
   <script>
     var output = document.getElementById('output');
     var pressedKeys = {};
+    var customInterval = 100; // Default interval value
 
-    // Function to display the letter
     function displayLetter(letter) {
       output.textContent += letter;
     }
+
+    // Function to prompt user for custom interval value
+    function setCustomInterval() {
+      var userInput = prompt("Enter custom interval value (in milliseconds):", customInterval);
+      if (userInput !== null) {
+        customInterval = parseInt(userInput);
+      }
+    }
+
+    // Event listener for button click to set custom interval
+    document.getElementById('intervalButton').addEventListener('click', setCustomInterval);
 
     // Event listener for keydown event
     window.addEventListener('keydown', function(event) {
       var key = event.key;
       
-      // Check if the key is not already pressed
       if (!pressedKeys[key]) {
-        // Display the letter
         displayLetter(key);
-
-        // Mark the key as pressed
         pressedKeys[key] = true;
-
-        // Set an interval to repeatedly call displayLetter while the key is held down
+        
         var interval = setInterval(function() {
           if (pressedKeys[key]) {
             displayLetter(key);
           } else {
-            // If the key is released, clear the interval
             clearInterval(interval);
           }
-        }, 100); // Adjust the interval as needed
+        }, customInterval);
       }
     });
 
     // Event listener for keyup event
     window.addEventListener('keyup', function(event) {
       var key = event.key;
-
-      // Mark the key as released
       pressedKeys[key] = false;
     });
   </script>
-</body><!-- made by gurpreet -->
+</body>
 </html>
