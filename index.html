@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continuous Keyboard Press</title>
+</head>
+<body>
+  <div id="output"></div>
+<!-- made by gurpreet -->
+  <script>
+    var output = document.getElementById('output');
+    var pressedKeys = {};
+
+    // Function to display the letter
+    function displayLetter(letter) {
+      output.textContent += letter;
+    }
+
+    // Event listener for keydown event
+    window.addEventListener('keydown', function(event) {
+      var key = event.key;
+      
+      // Check if the key is not already pressed
+      if (!pressedKeys[key]) {
+        // Display the letter
+        displayLetter(key);
+
+        // Mark the key as pressed
+        pressedKeys[key] = true;
+
+        // Set an interval to repeatedly call displayLetter while the key is held down
+        var interval = setInterval(function() {
+          if (pressedKeys[key]) {
+            displayLetter(key);
+          } else {
+            // If the key is released, clear the interval
+            clearInterval(interval);
+          }
+        }, 100); // Adjust the interval as needed
+      }
+    });
+
+    // Event listener for keyup event
+    window.addEventListener('keyup', function(event) {
+      var key = event.key;
+
+      // Mark the key as released
+      pressedKeys[key] = false;
+    });
+  </script>
+</body><!-- made by gurpreet -->
+</html>
